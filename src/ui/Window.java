@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,7 +18,9 @@ import javax.swing.JScrollPane;
 import tasks.TaskType;
 
 public class Window extends JFrame {
+	private WindowDialog wd;
 	private TaskList tasks;
+	
 
 	public Window(int width, int height, String title) {
 		super(title);
@@ -25,6 +28,8 @@ public class Window extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(width, height));
 		setLayout(new BorderLayout());
+		
+		wd = new WindowDialog();
 		
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -41,7 +46,10 @@ public class Window extends JFrame {
 			button.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					openCreateTaskDialog(type);
+					int xPos = button.getLocationOnScreen().x - button.getMargin().left;
+					int yPos = (int) (button.getLocationOnScreen().y + button.getSize().getHeight());
+					Point position = new Point(xPos, yPos);
+					openCreateTaskDialog(type, position);
 				}
 			});
 			
@@ -49,8 +57,6 @@ public class Window extends JFrame {
 		}
 		
 		tasks = new TaskList();
-		// for (int i = 0; i < 10; i++) 
-			// tasks.addItem(new TaskListItem("Task Test: " + i));
 		
 		JScrollPane scrollPane = new JScrollPane(tasks);
 		scrollPane.setPreferredSize(new Dimension(0, 400));
@@ -64,17 +70,37 @@ public class Window extends JFrame {
 		
 		add(topPanel, BorderLayout.NORTH);
 		add(centerPanel, BorderLayout.CENTER);
+		
+		/*
+		UtilDateModel startModel = new UtilDateModel();
+		Properties startProperties = new Properties();
+
+
+		JDatePanelImpl startDatePanel = new JDatePanelImpl(startModel, startProperties);
+		JDatePickerImpl startDatePicker = new JDatePickerImpl(startDatePanel, new DateLabelFormatter());
+		startDatePicker.setTextEditable(false);
+		startDatePicker.setPreferredSize(new Dimension(300, 30));
+		
+		add(startDatePicker);
+		*/
 
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
-	public void openCreateTaskDialog(TaskType type) {
+	public void openCreateTaskDialog(TaskType type, Point position) {
 		switch (type) {
 			case OFFICE:
 				System.out.println("Create " + type.name().toLowerCase() + " task!");
-				tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
+				if (wd.isShowing()) {
+					wd.setVisible(false);
+				} else {
+					wd.setVisible(true);
+					wd.setLocation(position);
+				}
+				
+				// tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
 				break;
 			case HOME:
 				System.out.println("Create " + type.name().toLowerCase() + " task!");
