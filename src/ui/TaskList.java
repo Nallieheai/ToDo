@@ -12,9 +12,10 @@ import assets.Task;
 
 public class TaskList extends JPanel {
 	private ArrayList<Task> tasks = new ArrayList<>();
-	private int amountOfItems = 0;
 	private GridBagConstraints gbc;
 	private JPanel panel;
+	
+	private int amountOfItems = 0;
 	
 	public TaskList() {
 		setLayout(new BorderLayout());
@@ -38,10 +39,16 @@ public class TaskList extends JPanel {
 		gbc.gridy = amountOfItems;
 		gbc.insets = new Insets(10, 10, 10, 10);
 		panel.add(item, gbc);
+		panel.revalidate();
 		amountOfItems++;
+		
 	}
 
 	public ArrayList<Task> getTasks() {
 		return tasks;
+	}
+	
+	public int getAmountOfItems() {
+		return amountOfItems;
 	}
 }

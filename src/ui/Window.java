@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import tasks.TaskType;
 
 public class Window extends JFrame {
+	private TaskList tasks;
 
 	public Window(int width, int height, String title) {
 		super(title);
@@ -45,11 +46,11 @@ public class Window extends JFrame {
 			topPanel.add(button);
 		}
 		
-		TaskList taskListPanel = new TaskList();
-		for (int i = 0; i < 10; i++) 
-			taskListPanel.addItem(new TaskListItem("Task Test: " + i));
+		tasks = new TaskList();
+		// for (int i = 0; i < 10; i++) 
+			// tasks.addItem(new TaskListItem("Task Test: " + i));
 		
-		JScrollPane scrollPane = new JScrollPane(taskListPanel);
+		JScrollPane scrollPane = new JScrollPane(tasks);
 		scrollPane.setPreferredSize(new Dimension(0, 400));
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -71,6 +72,7 @@ public class Window extends JFrame {
 		switch (type) {
 			case OFFICE:
 				System.out.println("Create " + type.name().toLowerCase() + " task!");
+				tasks.addItem(new TaskListItem("Task Test: " + tasks.getAmountOfItems()));
 				break;
 			case HOME:
 				System.out.println("Create " + type.name().toLowerCase() + " task!");
