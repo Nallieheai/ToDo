@@ -16,6 +16,7 @@ public class TaskList extends JPanel {
 	private JPanel panel;
 	
 	private int amountOfItems = 0;
+	private final int maxTasksAllowed = 10;
 	
 	public TaskList() {
 		setLayout(new BorderLayout());
@@ -27,6 +28,11 @@ public class TaskList extends JPanel {
 	}
 	
 	public void addItem(TaskListItem item) {
+		if (amountOfItems >= maxTasksAllowed) {
+			System.out.println("You may only have 10 active tasks at once, please remove one before creating another");
+			return;
+		}
+			
 		gbc = new GridBagConstraints();
 		
 		gbc.anchor = GridBagConstraints.NORTH;

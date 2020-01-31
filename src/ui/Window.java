@@ -3,6 +3,7 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -36,6 +37,7 @@ public class Window extends JFrame {
 			
 			button.setFocusPainted(false);
 			button.setIcon(new ImageIcon(type.getIcon()));
+			button.setMargin(new Insets(2, 6, 2, 6));
 			button.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -53,7 +55,7 @@ public class Window extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(tasks);
 		scrollPane.setPreferredSize(new Dimension(0, 400));
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         
 		JPanel centerPanel = new JPanel();
         
@@ -72,13 +74,15 @@ public class Window extends JFrame {
 		switch (type) {
 			case OFFICE:
 				System.out.println("Create " + type.name().toLowerCase() + " task!");
-				tasks.addItem(new TaskListItem("Task Test: " + tasks.getAmountOfItems()));
+				tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
 				break;
 			case HOME:
 				System.out.println("Create " + type.name().toLowerCase() + " task!");
+				tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
 				break;
 			case ERRANDS:
 				System.out.println("Create " + type.name().toLowerCase() + " task!");
+				tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
 				break;
 			default:
 				System.out.println("Something went wrong");
