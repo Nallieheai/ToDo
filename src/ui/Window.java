@@ -6,15 +6,16 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import tasks.TaskType;
+
 public class Window extends JFrame {
-	
-	private String tasks[] = {"Office", "Home", "Errands"};
 
 	public Window(int width, int height, String title) {
 		super(title);
@@ -29,25 +30,24 @@ public class Window extends JFrame {
 		JLabel taskLabel = new JLabel("Add new task:");
 		topPanel.add(taskLabel);
 		
-		for (String btnText : tasks) {
-			JButton taskBtn = new JButton(btnText);
-			taskBtn.setFocusPainted(false);
-			taskBtn.addActionListener(new ActionListener() {
+		for (TaskType type : TaskType.values()) {
+			JButton button = new JButton(type.toString());
+			
+			button.setFocusPainted(false);
+			button.setIcon(new ImageIcon(type.getIcon()));
+			button.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.println("You have clicked " + btnText);
+					openCreateTaskDialog(type);
 				}
 			});
 			
-			topPanel.add(taskBtn);
+			topPanel.add(button);
 		}
 		
 		TaskList taskListPanel = new TaskList();
-		
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10; i++) 
 			taskListPanel.addItem(new TaskListItem("Task Test: " + i));
-		}
 		
 		JScrollPane scrollPane = new JScrollPane(taskListPanel);
 		scrollPane.setPreferredSize(new Dimension(0, 400));
@@ -65,6 +65,23 @@ public class Window extends JFrame {
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
+	}
+	
+	public void openCreateTaskDialog(TaskType type) {
+		switch (type) {
+			case OFFICE:
+				System.out.println("Create " + type.name().toLowerCase() + " task!");
+				break;
+			case HOME:
+				System.out.println("Create " + type.name().toLowerCase() + " task!");
+				break;
+			case ERRANDS:
+				System.out.println("Create " + type.name().toLowerCase() + " task!");
+				break;
+			default:
+				System.out.println("Something went wrong");
+				break;
+		}
 	}
 }
 
