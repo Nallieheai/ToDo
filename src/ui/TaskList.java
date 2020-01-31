@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import assets.Task;
+import tasks.Task;
 
 public class TaskList extends JPanel {
 	private ArrayList<Task> tasks = new ArrayList<>();
