@@ -92,23 +92,25 @@ public class Window extends JFrame {
 	public void openCreateTaskDialog(TaskType type, Point position) {
 		switch (type) {
 			case OFFICE:
-				System.out.println("Create " + type.name().toLowerCase() + " task!");
-				if (wd.isShowing()) {
-					wd.setVisible(false);
-				} else {
-					wd.setVisible(true);
-					wd.setLocation(position);
-				}
+				// System.out.println("Create " + type.name().toLowerCase() + " task!");
+				
+				wd.callDialog(type, position);
 				
 				// tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
 				break;
 			case HOME:
-				System.out.println("Create " + type.name().toLowerCase() + " task!");
-				tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
+				// System.out.println("Create " + type.name().toLowerCase() + " task!");
+
+				wd.callDialog(type, position);
+				
+				// tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
 				break;
 			case ERRANDS:
-				System.out.println("Create " + type.name().toLowerCase() + " task!");
-				tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
+				// System.out.println("Create " + type.name().toLowerCase() + " task!");
+
+				wd.callDialog(type, position);
+				
+				// tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
 				break;
 			default:
 				System.out.println("Something went wrong");
