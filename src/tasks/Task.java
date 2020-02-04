@@ -2,7 +2,7 @@ package tasks;
 
 import java.util.Date;
 
-public abstract class Task {
+public abstract class Task implements TaskInterface {
 	protected TaskType type;
 	protected String title;
 	protected String description;

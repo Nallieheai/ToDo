@@ -35,9 +35,6 @@ public class WindowDialog extends JFrame {
 	}
 	
 	public void callDialog(TaskType type, Point position) {
-		// System.out.println(dialogTypeCaller);
-		
-		
 		if (isShowing() && dialogTypeCaller == type) {
 			// Method for clearing form
 			
