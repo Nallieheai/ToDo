@@ -17,12 +17,13 @@ public abstract class Task implements TaskInterface {
 			case ERRANDS:
 				return new Errand();
 			default:
-				return new Office();
+				return null;
 		}
 	}
 	
 	@Override
 	public TaskType getType() {
+		// TODO Auto-generated method stub
 		return type;
 	}
 	
