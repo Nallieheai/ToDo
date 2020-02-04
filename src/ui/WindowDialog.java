@@ -2,19 +2,24 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Point;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.border.TitledBorder;
 
+import tasks.Task;
 import tasks.TaskType;
 
 public class WindowDialog extends JFrame {
 	
 	private TaskType dialogTypeCaller;
+	private GridBagConstraints gbc;
 	
 	public WindowDialog() {
 		super("WindowDialog");
@@ -24,9 +29,14 @@ public class WindowDialog extends JFrame {
 		getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 
 		JPanel mainPanel = new JPanel();
-
-		TitledBorder title1 = BorderFactory.createTitledBorder("title");
-		mainPanel.setBorder(title1);
+		mainPanel.setLayout(new GridBagLayout());
+		gbc = new GridBagConstraints();
+	
+		
+		
+		TitledBorder title = BorderFactory.createTitledBorder("title");
+		mainPanel.setBorder(title);
+		
 
 		add(mainPanel, BorderLayout.CENTER);
 
@@ -34,12 +44,12 @@ public class WindowDialog extends JFrame {
 		setVisible(false);
 	}
 	
-	public void callDialog(TaskType type, Point position) {
+	public Task callDialog(TaskType type, Point position) {
 		if (isShowing() && dialogTypeCaller == type) {
 			// Method for clearing form
 			
 			setVisible(false);
-			return;
+			return null;
 		} else if (isShowing() && dialogTypeCaller != type) {
 			// Method for clearing form
 		}
@@ -48,5 +58,6 @@ public class WindowDialog extends JFrame {
 		
 		setVisible(true);
 		setLocation(position);
+		return null;
 	}
 }
