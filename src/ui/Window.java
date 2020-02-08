@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import tasks.Task;
 import tasks.TaskType;
 
 public class Window extends JFrame {
@@ -29,7 +30,7 @@ public class Window extends JFrame {
 		setPreferredSize(new Dimension(width, height));
 		setLayout(new BorderLayout());
 		
-		wd = new WindowDialog();
+		wd = new WindowDialog(this);
 		
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -70,47 +71,26 @@ public class Window extends JFrame {
 		
 		add(topPanel, BorderLayout.NORTH);
 		add(centerPanel, BorderLayout.CENTER);
-		
-		/*
-		UtilDateModel startModel = new UtilDateModel();
-		Properties startProperties = new Properties();
-
-
-		JDatePanelImpl startDatePanel = new JDatePanelImpl(startModel, startProperties);
-		JDatePickerImpl startDatePicker = new JDatePickerImpl(startDatePanel, new DateLabelFormatter());
-		startDatePicker.setTextEditable(false);
-		startDatePicker.setPreferredSize(new Dimension(300, 30));
-		
-		add(startDatePicker);
-		*/
 
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
+	public void createTask(Task task) {
+		System.out.println(task.toString());
+	}
+	
 	public void openCreateTaskDialog(TaskType type, Point position) {
 		switch (type) {
 			case OFFICE:
-				// System.out.println("Create " + type.name().toLowerCase() + " task!");
-				
 				wd.callDialog(type, position);
-				
-				// tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
 				break;
 			case HOME:
-				// System.out.println("Create " + type.name().toLowerCase() + " task!");
-
 				wd.callDialog(type, position);
-				
-				// tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
 				break;
 			case ERRANDS:
-				// System.out.println("Create " + type.name().toLowerCase() + " task!");
-
 				wd.callDialog(type, position);
-				
-				// tasks.addItem(new TaskListItem(type.toString() + " Task: " + tasks.getAmountOfItems()));
 				break;
 			default:
 				System.out.println("Something went wrong");
