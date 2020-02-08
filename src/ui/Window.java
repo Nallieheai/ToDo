@@ -78,7 +78,7 @@ public class Window extends JFrame {
 	}
 	
 	public void createTask(Task task) {
-		System.out.println(task.toString());
+		tasks.addItem(new TaskListItem(task.getTitle()));
 	}
 	
 	public void openCreateTaskDialog(TaskType type, Point position) {

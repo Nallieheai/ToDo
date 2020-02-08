@@ -84,7 +84,7 @@ public class WindowDialog extends JFrame {
 				Task task = Task.createTask(dialogTypeCaller);
 				task.setTitle("Test title");
 				
-				// windowInstance.createTask();
+				windowInstance.createTask(task);
 			}
 		});
 		
