@@ -6,10 +6,11 @@ import java.util.Calendar;
 
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
+// Formats the selected date in the JDatePicker to a string that can be outputed
+// in a label or text field
 public class DateLabelFormatter extends AbstractFormatter {
 
-	private String datePattern = "yyyy-MM-dd";
-	private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
+	private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
 	@Override
 	public Object stringToValue(String text) throws ParseException {
@@ -19,10 +20,8 @@ public class DateLabelFormatter extends AbstractFormatter {
 	@Override
 	public String valueToString(Object value) throws ParseException {
 		if (value != null) {
-			Calendar cal = (Calendar) value;
-			return dateFormatter.format(cal.getTime());
-		}
-
-		return "";
+			Calendar calendar = (Calendar) value;
+			return dateFormatter.format(calendar.getTime());
+		} else return "";
 	}
 }
