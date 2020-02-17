@@ -34,9 +34,8 @@ public class TaskList extends JPanel {
 		}
 		
 		tasks.add(task);
-		if (tasks.size() > 1) 
-			Collections.sort(tasks);
-			
+		
+		sort();	
 		refresh();
 	}
 	
@@ -61,8 +60,13 @@ public class TaskList extends JPanel {
 			panel.add(item, gbc);
 			panel.revalidate();
 		}
+	} 
+	
+	public void sort() {
+		if (tasks.size() > 1) 
+			Collections.sort(tasks);
 	}
-
+	
 	public ArrayList<Task> getTasks() {
 		return tasks;
 	}
