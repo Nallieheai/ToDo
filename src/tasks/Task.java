@@ -65,6 +65,7 @@ public abstract class Task implements TaskInterface, Comparable<Task> {
 	
 	@Override
 	public int compareTo(Task task) {	
+		// TODO Auto-generated method stub
 		return date.compareTo(task.getDate());
 	}
 }
