@@ -24,7 +24,7 @@ public class TaskListItem extends JPanel {
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 
-		JLabel titleLabel = new JLabel(task.getType() + " - " + task.getTitle());
+		JLabel titleLabel = new JLabel("Date: " + task.getDate().toString() + " | " + task.getType() + " | " + task.getTitle());
 		
 		gbc.weighty = 1;
 		gbc.weightx = 1;

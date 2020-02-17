@@ -41,6 +41,8 @@ public class TaskList extends JPanel {
 	}
 	
 	public void refresh() {
+		panel.removeAll();
+		
 		for (int index = 0; index < tasks.size(); index++) {
 			gbc = new GridBagConstraints();
 			

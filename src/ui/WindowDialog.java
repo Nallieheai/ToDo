@@ -40,7 +40,6 @@ public class WindowDialog extends JFrame {
 	
 	public WindowDialog(Window instance) {
 		super("WindowDialog");
-		
 		windowInstance = instance;
 		
 		setPreferredSize(new Dimension(300, 250));
