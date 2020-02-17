@@ -1,21 +1,21 @@
 package tasks;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public abstract class Task implements TaskInterface {
+public abstract class Task implements TaskInterface, Comparable<Task> {
 	protected TaskType type;
 	protected String title;
 	protected String description;
-	protected Date date;
+	protected LocalDate date;
 	
 	public static Task createTask(TaskType type) {
 		switch (type) {
 			case OFFICE:
-				return new Office();
+				return new Office(type);
 			case HOME:
-				return new Home();
+				return new Home(type);
 			case ERRANDS:
-				return new Errand();
+				return new Errand(type);
 			default:
 				return null;
 		}
@@ -49,5 +49,22 @@ public abstract class Task implements TaskInterface {
 	public String getDecription() {
 		// TODO Auto-generated method stub
 		return description;
+	}
+	
+	@Override
+	public void setDate(LocalDate date) {
+		// TODO Auto-generated method stub
+		this.date = date;
+	}
+
+	@Override
+	public LocalDate getDate() {
+		// TODO Auto-generated method stub
+		return date;
+	}
+	
+	@Override
+	public int compareTo(Task task) {	
+		return date.compareTo(task.getDate());
 	}
 }

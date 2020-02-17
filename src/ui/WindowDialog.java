@@ -1,23 +1,21 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
-import javax.swing.SwingConstants;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -33,65 +31,83 @@ public class WindowDialog extends JFrame {
 	private Window windowInstance;
 	
 	private TaskType dialogTypeCaller;
-	private GridBagConstraints gbc;
 	
 	private JButton createBtn, cancelBtn;
 	private JDatePickerImpl startDatePicker;
+	private JTextField titleField, descriptionField;
 	private TitledBorder titledBorder;
-	private JPanel mainPanel;
+	private JPanel mainPanel, btnPanel;
 	
 	public WindowDialog(Window instance) {
 		super("WindowDialog");
 		
 		windowInstance = instance;
 		
-		setPreferredSize(new Dimension(300, 200));
+		setPreferredSize(new Dimension(300, 250));
 		setLayout(new BorderLayout());
 		setUndecorated(true);
 		getRootPane().setWindowDecorationStyle(JRootPane.NONE);
-
+		
 		mainPanel = new JPanel();
-		mainPanel.setLayout(new GridBagLayout());
-		gbc = new GridBagConstraints();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		
-		JLabel dateLabel = new JLabel("Date:", SwingConstants.LEFT);
-		gbc.gridx = 0; 
-		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.NONE;
-		mainPanel.add(dateLabel, gbc);
-		
+		// JDatePicker & titled border
+		// JDatePicker from: https://github.com/JDatePicker/JDatePicker
 		UtilDateModel startModel = new UtilDateModel();
 		Properties startProperties = new Properties();
-
 		JDatePanelImpl startDatePanel = new JDatePanelImpl(startModel, startProperties);
 		startDatePicker = new JDatePickerImpl(startDatePanel, new DateLabelFormatter());
-		startDatePicker.setTextEditable(false);
+		titledBorder = BorderFactory.createTitledBorder("Date");
+		startDatePicker.setBorder(titledBorder);
+		mainPanel.add(startDatePicker);
 		
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		gbc.weightx = 1;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = new Insets(2, 2, 2, 2);
-		mainPanel.add(startDatePicker, gbc);
+		// Task title field & titled border
+		titledBorder = BorderFactory.createTitledBorder("Task title");
+		titleField = new JTextField();
+		titleField.setBorder(titledBorder);
+		mainPanel.add(titleField);
 		
+		// Task description field & titled border
+		titledBorder = BorderFactory.createTitledBorder("Task description (optional)");
+		descriptionField = new JTextField();
+		descriptionField.setBorder(titledBorder);
+		mainPanel.add(descriptionField);
+		
+		// button panel, task button & cancel button
+		// FlowLayout aligned to the left, for aligning all the buttons
+		// on the same row from left to right
+		btnPanel = new JPanel();
+		btnPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		titledBorder = BorderFactory.createTitledBorder("Task actions");
+		btnPanel.setBorder(titledBorder);
+		
+		// Create button & action listener
 		createBtn = new JButton("Create task");
 		createBtn.setFocusPainted(false);
 		createBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String date = startDatePicker.getJFormattedTextField().getText();
+				if (!validateFields()) {
+					System.out.println("Please fill all of the required fields");
+					return;
+				}
+				
+				LocalDate date = LocalDate.parse(startDatePicker.getJFormattedTextField().getText());
+				String title = titleField.getText();
 				
 				Task task = Task.createTask(dialogTypeCaller);
-				task.setTitle("Test title");
+				task.setTitle(title);
+				task.setDate(date);
 				
-				windowInstance.createTask(task);
+				if (!descriptionField.getText().isBlank())
+					task.setDecription(descriptionField.getText());
+				
+				windowInstance.addTaskToList(task);
 			}
 		});
+		btnPanel.add(createBtn);
 		
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		mainPanel.add(createBtn, gbc);
-		
+		// Cancel button & action listener
 		cancelBtn = new JButton("Cancel");
 		cancelBtn.setFocusPainted(false);
 		cancelBtn.addActionListener(new ActionListener() {
@@ -101,14 +117,10 @@ public class WindowDialog extends JFrame {
 				setVisible(false);
 			}
 		});
+		btnPanel.add(cancelBtn);
 		
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		mainPanel.add(cancelBtn, gbc);
-		
-		
-		titledBorder = BorderFactory.createTitledBorder("title");
+		titledBorder = BorderFactory.createTitledBorder("TASKS");
+		mainPanel.add(btnPanel);
 		mainPanel.setBorder(titledBorder);
 
 		add(mainPanel, BorderLayout.NORTH);
@@ -117,23 +129,31 @@ public class WindowDialog extends JFrame {
 		setVisible(false);
 	}
 	
-	public Task callDialog(TaskType type, Point position) {
+	private boolean validateFields() {
+		if (startDatePicker.getJFormattedTextField().getText().isBlank() ||
+			titleField.getText().isBlank())
+			return false;
+		
+		return true;	
+	}
+	
+	public void callDialog(TaskType type, Point position) {
 		if (isShowing() && dialogTypeCaller == type) {
 			clearDialog();
 			setVisible(false);
-			return null;
+			return;
 		} else if (isShowing() && dialogTypeCaller != type) {
 			clearDialog();
 		}
 		
 		dialogTypeCaller = type;
 		setupDialog(position);
-		
-		return null;
 	}
 	
 	private void clearDialog() {
 		startDatePicker.getJFormattedTextField().setText("");
+		titleField.setText("");
+		descriptionField.setText("");
 	}
 	
 	private void setupDialog(Point position) {

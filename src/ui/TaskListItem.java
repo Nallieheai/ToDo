@@ -10,18 +10,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import tasks.Task;
+
 public class TaskListItem extends JPanel {
 	
 	private GridBagConstraints gbc;
+	private Task task;
 	
-	public TaskListItem(String taskType) {
+	public TaskListItem(Task task) {
 		setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 		
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 
-		JLabel titleLabel = new JLabel(taskType);
+		JLabel titleLabel = new JLabel(task.getType() + " - " + task.getTitle());
 		
 		gbc.weighty = 1;
 		gbc.weightx = 1;
@@ -48,5 +51,9 @@ public class TaskListItem extends JPanel {
 		
 		add(rightPanel, gbc);
 		setBorder(new LineBorder(Color.BLACK, 1)); 
+	}
+	
+	public Task getTask() {
+		return task;
 	}
 }
