@@ -60,6 +60,7 @@ public class Window extends JFrame {
 		tasks = new TaskList();
 		
 		JScrollPane scrollPane = new JScrollPane(tasks);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(4);
 		scrollPane.setPreferredSize(new Dimension(0, 400));
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -75,6 +76,10 @@ public class Window extends JFrame {
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
+	}
+	
+	public TaskList getTaskList() {
+		return tasks;
 	}
 	
 	public void addTaskToList(Task task) {

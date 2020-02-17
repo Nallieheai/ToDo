@@ -92,6 +92,12 @@ public class WindowDialog extends JFrame {
 					return;
 				}
 				
+				if (windowInstance.getTaskList().getAmountOfItems() >= windowInstance.getTaskList().getMaxAmountOfItems()) {
+					// System.out.println("You cant create more than " + windowInstance.getTaskList().getMaxAmountOfItems() + " tasks");
+					return;
+				}
+					
+				
 				LocalDate date = LocalDate.parse(startDatePicker.getJFormattedTextField().getText());
 				String title = titleField.getText();
 				

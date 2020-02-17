@@ -16,7 +16,7 @@ public class TaskList extends JPanel {
 	private GridBagConstraints gbc;
 	private JPanel panel;
 	
-	private final int maxTasksAllowed = 10;
+	private final int maxAmountOfTasksAllowed = 10;
 	
 	public TaskList() {
 		setLayout(new BorderLayout());
@@ -28,7 +28,7 @@ public class TaskList extends JPanel {
 	}
 	
 	public void addItem(Task task) {
-		if (tasks.size() >= maxTasksAllowed) {
+		if (tasks.size() >= maxAmountOfTasksAllowed) {
 			System.out.println("You may only have 10 active tasks at once, please remove one before creating another");
 			return;
 		}
@@ -67,5 +67,9 @@ public class TaskList extends JPanel {
 	
 	public int getAmountOfItems() {
 		return tasks.size();
+	}
+	
+	public int getMaxAmountOfItems() {
+		return maxAmountOfTasksAllowed;
 	}
 }
