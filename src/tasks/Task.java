@@ -23,49 +23,41 @@ public abstract class Task implements TaskInterface, Comparable<Task> {
 	
 	@Override
 	public TaskType getType() {
-		// TODO Auto-generated method stub
 		return type;
 	}
 	
 	@Override
 	public void setTitle(String title) {
-		// TODO Auto-generated method stub
 		this.title = title;
 	}
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
 		return title;
 	}
 
 	@Override
 	public void setDecription(String decription) {
-		// TODO Auto-generated method stub
 		this.description = decription;
 	}
 
 	@Override
 	public String getDecription() {
-		// TODO Auto-generated method stub
 		return description;
 	}
 	
 	@Override
 	public void setDate(LocalDate date) {
-		// TODO Auto-generated method stub
 		this.date = date;
 	}
 
 	@Override
 	public LocalDate getDate() {
-		// TODO Auto-generated method stub
 		return date;
 	}
 	
 	@Override
 	public int compareTo(Task task) {	
-		// TODO Auto-generated method stub
 		return date.compareTo(task.getDate());
 	}
 }
