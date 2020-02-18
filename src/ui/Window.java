@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
@@ -8,6 +9,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,6 +24,9 @@ public class Window extends JFrame {
 	private WindowDialog wd;
 	private TaskList tasks;
 	
+	private JPanel topPanel, innerLeftTopPanel;
+	private JLabel taskLabel, amountOfItemsLabel;
+	
 
 	public Window(int width, int height, String title) {
 		super(title);
@@ -32,11 +37,13 @@ public class Window extends JFrame {
 		
 		wd = new WindowDialog(this);
 		
-		JPanel topPanel = new JPanel();
-		topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		topPanel = new JPanel(new BorderLayout());
+		topPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 10));
+		innerLeftTopPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
-		JLabel taskLabel = new JLabel("Add new task:");
-		topPanel.add(taskLabel);
+		
+		taskLabel = new JLabel("Add new task:");
+		innerLeftTopPanel.add(taskLabel);
 		
 		for (TaskType type : TaskType.values()) {
 			JButton button = new JButton(type.toString());
@@ -54,11 +61,16 @@ public class Window extends JFrame {
 				}
 			});
 			
-			topPanel.add(button);
+			innerLeftTopPanel.add(button);
 		}
 		
 		tasks = new TaskList();
+		amountOfItemsLabel = new JLabel("Tasks in the list: " + tasks.getAmountOfItems() + "/" + tasks.getMaxAmountOfItems());
+		amountOfItemsLabel.setForeground(new Color(200, 50, 50));
 		
+		topPanel.add(innerLeftTopPanel, BorderLayout.WEST);
+		topPanel.add(amountOfItemsLabel, BorderLayout.EAST);
+
 		JScrollPane scrollPane = new JScrollPane(tasks);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(4);
 		scrollPane.setPreferredSize(new Dimension(0, 400));
@@ -70,6 +82,8 @@ public class Window extends JFrame {
 		centerPanel.setLayout(new BorderLayout());
 		centerPanel.add(scrollPane, BorderLayout.NORTH);
 		
+		
+		
 		add(topPanel, BorderLayout.NORTH);
 		add(centerPanel, BorderLayout.CENTER);
 
@@ -78,12 +92,17 @@ public class Window extends JFrame {
 		setVisible(true);
 	}
 	
+	public void updateAmountOfItemsLabel() {
+		amountOfItemsLabel.setText("Tasks in the list: " + tasks.getAmountOfItems() + "/" + tasks.getMaxAmountOfItems());
+	}
+	
 	public TaskList getTaskList() {
 		return tasks;
 	}
 	
 	public void addTaskToList(Task task) {
 		tasks.addItem(task);
+		updateAmountOfItemsLabel();
 	}
 	
 	public void openCreateTaskDialog(TaskType type, Point position) {

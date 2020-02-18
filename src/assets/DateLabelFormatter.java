@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
-// Formats the selected date in the JDatePicker to a string that can be outputed
+// Formats the selected date in the JDatePicker to a string that can be output
 // in a label or text field
 public class DateLabelFormatter extends AbstractFormatter {
 
