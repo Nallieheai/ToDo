@@ -42,6 +42,9 @@ public class TaskList extends JPanel {
 	public void removeItem(Task taskToRemove) {
 		tasks.remove(taskToRemove);
 		refresh();
+		
+		Window window = (Window) this.getTopLevelAncestor();
+		window.updateAmountOfItemsLabel();
 	}
 
 	public void refresh() {
