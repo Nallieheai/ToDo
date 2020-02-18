@@ -108,8 +108,10 @@ public class WindowDialog extends JFrame {
 					task.setDecription(descriptionField.getText());
 				
 				windowInstance.addTaskToList(task);
+				setVisible(false);
 			}
 		});
+		
 		btnPanel.add(createBtn);
 		
 		// Cancel button & action listener
