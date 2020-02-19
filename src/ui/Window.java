@@ -87,8 +87,7 @@ public class Window extends JFrame {
 		JPanel statusPanel = new JPanel(new BorderLayout());
 		statusPanel.setPreferredSize(new Dimension(0, 20));
 		statusPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 10));
-		// statusPanel.setBackground(Color.RED);
-		statusLabel = new JLabel("HEEEJ");
+		statusLabel = new JLabel("Placeholder Status Text");
 		statusLabel.setForeground(new Color(200, 50, 50));
 		statusPanel.add(statusLabel, BorderLayout.EAST);
 		
