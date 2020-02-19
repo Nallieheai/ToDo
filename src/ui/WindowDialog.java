@@ -101,9 +101,7 @@ public class WindowDialog extends JFrame {
 					// System.out.println("You cant create more than " + windowInstance.getTaskList().getMaxAmountOfItems() + " tasks");
 					return;
 				}
-					
-				
-				// LocalDate date = LocalDate.parse(startDatePicker.getJFormattedTextField().getText());
+
 				LocalDate date = LocalDate.parse(datePicker.getText());
 				String title = titleField.getText();
 				
@@ -153,15 +151,13 @@ public class WindowDialog extends JFrame {
 	
 	public void callDialog(TaskType type, Point position) {
 		if (isShowing() && dialogTypeCaller == type) {
-			clearDialog();
 			setVisible(false);
 			return;
-		} else if (isShowing() && dialogTypeCaller != type) {
-			clearDialog();
 		}
 		
 		dialogTypeCaller = type;
 		setupDialog(position);
+		clearDialog();
 	}
 	
 	private void clearDialog() {

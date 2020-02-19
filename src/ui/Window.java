@@ -25,7 +25,7 @@ public class Window extends JFrame {
 	private TaskList tasks;
 
 	private JPanel topPanel, innerLeftTopPanel;
-	private JLabel taskLabel, amountOfItemsLabel;
+	private JLabel taskLabel, amountOfItemsLabel, statusLabel;
 
 	public Window(int width, int height, String title) {
 		super(title);
@@ -62,7 +62,7 @@ public class Window extends JFrame {
 			innerLeftTopPanel.add(button);
 		}
 
-		tasks = new TaskList();
+		tasks = new TaskList(this);
 		amountOfItemsLabel = new JLabel(
 				"Tasks in the list: " + tasks.getAmountOfItems() + "/" + tasks.getMaxAmountOfItems());
 		amountOfItemsLabel.setForeground(new Color(200, 50, 50));
@@ -83,7 +83,17 @@ public class Window extends JFrame {
 
 		add(topPanel, BorderLayout.NORTH);
 		add(centerPanel, BorderLayout.CENTER);
-
+		
+		JPanel statusPanel = new JPanel(new BorderLayout());
+		statusPanel.setPreferredSize(new Dimension(0, 20));
+		statusPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 10));
+		// statusPanel.setBackground(Color.RED);
+		statusLabel = new JLabel("HEEEJ");
+		statusLabel.setForeground(new Color(200, 50, 50));
+		statusPanel.add(statusLabel, BorderLayout.EAST);
+		
+		add(statusPanel, BorderLayout.SOUTH);
+		
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -93,6 +103,10 @@ public class Window extends JFrame {
 		amountOfItemsLabel
 				.setText("Tasks in the list: " + tasks.getAmountOfItems() + "/" + tasks.getMaxAmountOfItems());
 	}
+	
+	public void updateStatusLabel(String status) {
+		statusLabel.setText(status);
+	} 
 
 	public TaskList getTaskList() {
 		return tasks;

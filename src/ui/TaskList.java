@@ -15,10 +15,13 @@ public class TaskList extends JPanel {
 	private ArrayList<Task> tasks = new ArrayList<>();
 	private GridBagConstraints gbc;
 	private JPanel panel;
+	
+	private Window window;
 
 	private final int maxAmountOfTasksAllowed = 10;
 
-	public TaskList() {
+	public TaskList(Window window) {
+		this.window = window;
 		setLayout(new BorderLayout());
 
 		panel = new JPanel();
@@ -37,14 +40,16 @@ public class TaskList extends JPanel {
 
 		sort();
 		refresh();
+		
+		window.updateStatusLabel("New " + task.getType() + " task added: " + task.getTitle());
 	}
 
 	public void removeItem(Task taskToRemove) {
 		tasks.remove(taskToRemove);
 		refresh();
 		
-		Window window = (Window) this.getTopLevelAncestor();
 		window.updateAmountOfItemsLabel();
+		window.updateStatusLabel("Task deleted: " + taskToRemove.getTitle());
 	}
 
 	public void refresh() {
