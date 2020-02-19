@@ -7,7 +7,6 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -15,14 +14,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 
-import assets.DateLabelFormatter;
 import tasks.Task;
 import tasks.TaskType;
 
@@ -33,10 +31,11 @@ public class WindowDialog extends JFrame {
 	private TaskType dialogTypeCaller;
 	
 	private JButton createBtn, cancelBtn;
-	private JDatePickerImpl startDatePicker;
-	private JTextField titleField, descriptionField;
+	private JTextArea descriptionArea;
+	private JTextField titleField;
 	private TitledBorder titledBorder;
 	private JPanel mainPanel, btnPanel;
+	private DatePicker datePicker;
 	
 	public WindowDialog(Window instance) {
 		super("WindowDialog");
@@ -49,16 +48,22 @@ public class WindowDialog extends JFrame {
 		
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		
-		// JDatePicker & titled border
-		// JDatePicker from: https://github.com/JDatePicker/JDatePicker
-		UtilDateModel startModel = new UtilDateModel();
-		Properties startProperties = new Properties();
-		JDatePanelImpl startDatePanel = new JDatePanelImpl(startModel, startProperties);
-		startDatePicker = new JDatePickerImpl(startDatePanel, new DateLabelFormatter());
-		titledBorder = BorderFactory.createTitledBorder("Date");
-		startDatePicker.setBorder(titledBorder);
-		mainPanel.add(startDatePicker);
+
+		/* LGoodDatePicker 10.4.1
+		 * https://github.com/LGoodDatePicker/LGoodDatePicker/
+		 * MIT License
+		 */
+		DatePickerSettings dateSettings = new DatePickerSettings();
+		dateSettings = new DatePickerSettings();
+        dateSettings.setFormatForDatesCommonEra("yyyy-MM-dd");
+        dateSettings.setFormatForDatesBeforeCommonEra("uuuu-MM-dd");
+        dateSettings.setAllowKeyboardEditing(false);
+        dateSettings.setVisibleClearButton(false);
+        titledBorder = BorderFactory.createTitledBorder("Date");
+        datePicker = new DatePicker(dateSettings);
+        datePicker.setDateToToday();
+		datePicker.setBorder(titledBorder);
+		mainPanel.add(datePicker);
 		
 		// Task title field & titled border
 		titledBorder = BorderFactory.createTitledBorder("Task title");
@@ -68,9 +73,10 @@ public class WindowDialog extends JFrame {
 		
 		// Task description field & titled border
 		titledBorder = BorderFactory.createTitledBorder("Task description (optional)");
-		descriptionField = new JTextField();
-		descriptionField.setBorder(titledBorder);
-		mainPanel.add(descriptionField);
+		descriptionArea = new JTextArea();
+		descriptionArea.setRows(2);
+		descriptionArea.setBorder(titledBorder);
+		mainPanel.add(descriptionArea);
 		
 		// button panel, task button & cancel button
 		// FlowLayout aligned to the left, for aligning all the buttons
@@ -97,15 +103,16 @@ public class WindowDialog extends JFrame {
 				}
 					
 				
-				LocalDate date = LocalDate.parse(startDatePicker.getJFormattedTextField().getText());
+				// LocalDate date = LocalDate.parse(startDatePicker.getJFormattedTextField().getText());
+				LocalDate date = LocalDate.parse(datePicker.getText());
 				String title = titleField.getText();
 				
 				Task task = Task.createTask(dialogTypeCaller);
 				task.setTitle(title);
 				task.setDate(date);
 				
-				if (!descriptionField.getText().isBlank())
-					task.setDecription(descriptionField.getText());
+				if (!descriptionArea.getText().isBlank())
+					task.setDecription(descriptionArea.getText());
 				
 				windowInstance.addTaskToList(task);
 				setVisible(false);
@@ -137,7 +144,7 @@ public class WindowDialog extends JFrame {
 	}
 	
 	private boolean validateFields() {
-		if (startDatePicker.getJFormattedTextField().getText().isBlank() ||
+		if (datePicker.getText().isBlank() ||
 			titleField.getText().isBlank())
 			return false;
 		
@@ -158,9 +165,9 @@ public class WindowDialog extends JFrame {
 	}
 	
 	private void clearDialog() {
-		startDatePicker.getJFormattedTextField().setText("");
+		datePicker.setDateToToday();
 		titleField.setText("");
-		descriptionField.setText("");
+		descriptionArea.setText("");
 	}
 	
 	private void setupDialog(Point position) {
