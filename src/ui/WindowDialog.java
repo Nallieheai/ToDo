@@ -59,23 +59,20 @@ public class WindowDialog extends JFrame {
         dateSettings.setFormatForDatesBeforeCommonEra("uuuu-MM-dd");
         dateSettings.setAllowKeyboardEditing(false);
         dateSettings.setVisibleClearButton(false);
-        titledBorder = BorderFactory.createTitledBorder("Date");
         datePicker = new DatePicker(dateSettings);
         datePicker.setDateToToday();
-		datePicker.setBorder(titledBorder);
+		datePicker.setBorder(BorderFactory.createTitledBorder("Date"));
 		mainPanel.add(datePicker);
 		
 		// Task title field & titled border
-		titledBorder = BorderFactory.createTitledBorder("Task title");
 		titleField = new JTextField();
-		titleField.setBorder(titledBorder);
+		titleField.setBorder(BorderFactory.createTitledBorder("Task title"));
 		mainPanel.add(titleField);
 		
 		// Task description field & titled border
-		titledBorder = BorderFactory.createTitledBorder("Task description (optional)");
 		descriptionArea = new JTextArea();
 		descriptionArea.setRows(2);
-		descriptionArea.setBorder(titledBorder);
+		descriptionArea.setBorder(BorderFactory.createTitledBorder("Task description (optional)"));
 		mainPanel.add(descriptionArea);
 		
 		// button panel, task button & cancel button
@@ -129,6 +126,7 @@ public class WindowDialog extends JFrame {
 				setVisible(false);
 			}
 		});
+		
 		btnPanel.add(cancelBtn);
 		
 		titledBorder = BorderFactory.createTitledBorder("TASKS");
