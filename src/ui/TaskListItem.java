@@ -21,10 +21,10 @@ public class TaskListItem extends JPanel {
 
 	private GridBagConstraints gbc;
 	private Task task;
-	
+
 	private JPanel rightPanel;
 	private JButton completedBtn, editBtn, deleteBtn;
-	
+
 	private TitledBorder titledBorder;
 
 	public TaskListItem(Task task, TaskList parent) {
@@ -35,7 +35,7 @@ public class TaskListItem extends JPanel {
 
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		
+
 		JTextArea descriptionArea = new JTextArea(task.getDecription());
 		descriptionArea.setRows(1);
 		descriptionArea.setBorder(BorderFactory.createTitledBorder("Descrption (Optional)"));
@@ -48,7 +48,7 @@ public class TaskListItem extends JPanel {
 		gbc.gridy = 0;
 		gbc.insets = new Insets(4, 4, 4, 4);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		
+
 		add(descriptionArea, gbc);
 
 		rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -74,18 +74,20 @@ public class TaskListItem extends JPanel {
 		rightPanel.add(deleteBtn);
 
 		add(rightPanel, gbc);
-		
+
 		LocalDate todaysDate = LocalDate.now();
 		int date = todaysDate.compareTo(task.getDate());
-		
+
 		if (date > 0) {
 			titledBorder = BorderFactory.createTitledBorder(task.getItemTitle() + " - Passed");
-			titledBorder.setTitleColor(new Color(200, 50, 50));	
+			titledBorder.setTitleColor(new Color(200, 50, 50));
 		} else if (date == 0) {
 			titledBorder = BorderFactory.createTitledBorder(task.getItemTitle() + " - Today");
 			titledBorder.setTitleColor(new Color(200, 100, 50));
+		} else {
+			titledBorder = BorderFactory.createTitledBorder(task.getItemTitle());
 		}
-			
+
 		setBorder(titledBorder);
 	}
 

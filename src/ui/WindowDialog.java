@@ -25,56 +25,56 @@ import tasks.Task;
 import tasks.TaskType;
 
 public class WindowDialog extends JFrame {
-	
+
 	private Window windowInstance;
-	
+
 	private TaskType dialogTypeCaller;
-	
+
 	private JButton createBtn, cancelBtn;
 	private JTextArea descriptionArea;
 	private JTextField titleField;
 	private TitledBorder titledBorder;
 	private JPanel mainPanel, btnPanel;
 	private DatePicker datePicker;
-	
+
 	public WindowDialog(Window instance) {
 		super("WindowDialog");
 		windowInstance = instance;
-		
+
 		setPreferredSize(new Dimension(300, 250));
 		setLayout(new BorderLayout());
 		setUndecorated(true);
 		getRootPane().setWindowDecorationStyle(JRootPane.NONE);
-		
+
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-		/* LGoodDatePicker 10.4.1
-		 * https://github.com/LGoodDatePicker/LGoodDatePicker/
+		/*
+		 * LGoodDatePicker 10.4.1 https://github.com/LGoodDatePicker/LGoodDatePicker/
 		 * MIT License
 		 */
 		DatePickerSettings dateSettings = new DatePickerSettings();
 		dateSettings = new DatePickerSettings();
-        dateSettings.setFormatForDatesCommonEra("yyyy-MM-dd");
-        dateSettings.setFormatForDatesBeforeCommonEra("uuuu-MM-dd");
-        dateSettings.setAllowKeyboardEditing(false);
-        dateSettings.setVisibleClearButton(false);
-        datePicker = new DatePicker(dateSettings);
-        datePicker.setDateToToday();
+		dateSettings.setFormatForDatesCommonEra("yyyy-MM-dd");
+		dateSettings.setFormatForDatesBeforeCommonEra("uuuu-MM-dd");
+		dateSettings.setAllowKeyboardEditing(false);
+		dateSettings.setVisibleClearButton(false);
+		datePicker = new DatePicker(dateSettings);
+		datePicker.setDateToToday();
 		datePicker.setBorder(BorderFactory.createTitledBorder("Date"));
 		mainPanel.add(datePicker);
-		
+
 		// Task title field & titled border
 		titleField = new JTextField();
 		titleField.setBorder(BorderFactory.createTitledBorder("Task title"));
 		mainPanel.add(titleField);
-		
+
 		// Task description field & titled border
 		descriptionArea = new JTextArea();
 		descriptionArea.setRows(2);
 		descriptionArea.setBorder(BorderFactory.createTitledBorder("Task description (optional)"));
 		mainPanel.add(descriptionArea);
-		
+
 		// button panel, task button & cancel button
 		// FlowLayout aligned to the left, for aligning all the buttons
 		// on the same row from left to right
@@ -82,7 +82,7 @@ public class WindowDialog extends JFrame {
 		btnPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		titledBorder = BorderFactory.createTitledBorder("Task actions");
 		btnPanel.setBorder(titledBorder);
-		
+
 		// Create button & action listener
 		createBtn = new JButton("Create task");
 		createBtn.setFocusPainted(false);
@@ -93,29 +93,31 @@ public class WindowDialog extends JFrame {
 					System.out.println("Please fill all of the required fields");
 					return;
 				}
-				
-				if (windowInstance.getTaskList().getAmountOfItems() >= windowInstance.getTaskList().getMaxAmountOfItems()) {
-					// System.out.println("You cant create more than " + windowInstance.getTaskList().getMaxAmountOfItems() + " tasks");
+
+				if (windowInstance.getTaskList().getAmountOfItems() >= windowInstance.getTaskList()
+						.getMaxAmountOfItems()) {
+					// System.out.println("You cant create more than " +
+					// windowInstance.getTaskList().getMaxAmountOfItems() + " tasks");
 					return;
 				}
 
 				LocalDate date = LocalDate.parse(datePicker.getText());
 				String title = titleField.getText();
-				
+
 				Task task = Task.createTask(dialogTypeCaller);
 				task.setTitle(title);
 				task.setDate(date);
-				
+
 				if (!descriptionArea.getText().isBlank())
 					task.setDecription(descriptionArea.getText());
-				
+
 				windowInstance.addTaskToList(task);
 				setVisible(false);
 			}
 		});
-		
+
 		btnPanel.add(createBtn);
-		
+
 		// Cancel button & action listener
 		cancelBtn = new JButton("Cancel");
 		cancelBtn.setFocusPainted(false);
@@ -126,9 +128,9 @@ public class WindowDialog extends JFrame {
 				setVisible(false);
 			}
 		});
-		
+
 		btnPanel.add(cancelBtn);
-		
+
 		titledBorder = BorderFactory.createTitledBorder("TASKS");
 		mainPanel.add(btnPanel);
 		mainPanel.setBorder(titledBorder);
@@ -138,36 +140,35 @@ public class WindowDialog extends JFrame {
 		pack();
 		setVisible(false);
 	}
-	
+
 	private boolean validateFields() {
-		if (datePicker.getText().isBlank() ||
-			titleField.getText().isBlank())
+		if (datePicker.getText().isBlank() || titleField.getText().isBlank())
 			return false;
-		
-		return true;	
+
+		return true;
 	}
-	
+
 	public void callDialog(TaskType type, Point position) {
 		if (isShowing() && dialogTypeCaller == type) {
 			setVisible(false);
 			return;
 		}
-		
+
 		dialogTypeCaller = type;
 		setupDialog(position);
 		clearDialog();
 	}
-	
+
 	private void clearDialog() {
 		datePicker.setDateToToday();
 		titleField.setText("");
 		descriptionArea.setText("");
 	}
-	
+
 	private void setupDialog(Point position) {
 		setLocation(position);
 		setVisible(true);
-		
+
 		titledBorder.setTitle("Creating " + dialogTypeCaller.name().toLowerCase() + " task");
 		createBtn.setText("Create " + dialogTypeCaller.name().toLowerCase() + " task");
 		mainPanel.repaint();
