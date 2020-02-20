@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -50,6 +51,14 @@ public class TaskList extends JPanel {
 
 		window.updateAmountOfItemsLabel();
 		window.updateStatusLabel("Task deleted: " + taskToRemove.getItemTitle());
+	}
+	
+	public void cancelEditOnItems() {
+		for (Component component : panel.getComponents()) {
+			TaskListItem item = (TaskListItem) component;
+			if (item.isBeingEdited())
+				item.editItem();
+		}
 	}
 
 	public void refresh() {

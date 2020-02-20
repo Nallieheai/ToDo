@@ -50,7 +50,8 @@ public class WindowDialog extends JFrame {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
 		/*
-		 * LGoodDatePicker 10.4.1 https://github.com/LGoodDatePicker/LGoodDatePicker/
+		 * LGoodDatePicker 10.4.1
+		 * https://github.com/LGoodDatePicker/LGoodDatePicker/
 		 * MIT License
 		 */
 		DatePickerSettings dateSettings = new DatePickerSettings();
@@ -94,12 +95,8 @@ public class WindowDialog extends JFrame {
 					return;
 				}
 
-				if (windowInstance.getTaskList().getAmountOfItems() >= windowInstance.getTaskList()
-						.getMaxAmountOfItems()) {
-					// System.out.println("You cant create more than " +
-					// windowInstance.getTaskList().getMaxAmountOfItems() + " tasks");
+				if (windowInstance.getTaskList().getAmountOfItems() >= windowInstance.getTaskList().getMaxAmountOfItems()) 
 					return;
-				}
 
 				LocalDate date = LocalDate.parse(datePicker.getText());
 				String title = titleField.getText();

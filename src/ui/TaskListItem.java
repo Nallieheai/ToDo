@@ -19,16 +19,18 @@ import tasks.Task;
 
 public class TaskListItem extends JPanel {
 
-	private GridBagConstraints gbc;
+	private boolean isEditing = false;
 	private Task task;
+	private TaskList parent;
 
 	private JPanel rightPanel;
 	private JButton completedBtn, editBtn, deleteBtn;
-
 	private TitledBorder titledBorder;
+	private GridBagConstraints gbc;
 
 	public TaskListItem(Task task, TaskList parent) {
 		this.task = task;
+		this.parent = parent;
 
 		setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -61,6 +63,12 @@ public class TaskListItem extends JPanel {
 
 		editBtn = new JButton("Edit");
 		editBtn.setFocusPainted(false);
+		editBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editItem();
+			}
+		});
 		rightPanel.add(editBtn);
 
 		deleteBtn = new JButton("Delete");
@@ -89,6 +97,21 @@ public class TaskListItem extends JPanel {
 		}
 
 		setBorder(titledBorder);
+	}
+	
+	public void editItem() {
+		if (!isEditing) {
+			parent.cancelEditOnItems();
+			isEditing = true;
+			System.out.println("Enter edit mode");
+		} else {
+			isEditing = false;
+			System.out.println("Exit edit mode");
+		}
+	}
+	
+	public boolean isBeingEdited() {
+		return isEditing;
 	}
 
 	public Task getTask() {

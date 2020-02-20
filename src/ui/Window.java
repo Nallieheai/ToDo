@@ -31,7 +31,7 @@ public class Window extends JFrame {
 	public Window(int width, int height, String title) {
 		super(title);
 
-		// Window settings
+		// Window (JFrame)
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(width, height));
@@ -101,7 +101,7 @@ public class Window extends JFrame {
 
 		add(statusPanel, BorderLayout.SOUTH);
 
-		// Window settings
+		// Window (JFrame)
 
 		pack();
 		setLocationRelativeTo(null);
