@@ -24,18 +24,23 @@ public class Window extends JFrame {
 	private WindowDialog wd;
 	private TaskList tasks;
 
-	private JPanel topPanel, innerLeftTopPanel;
+	private JPanel topPanel, innerLeftTopPanel, centerPanel, statusPanel;
 	private JLabel taskLabel, amountOfItemsLabel, statusLabel;
+	private JScrollPane scrollPane;
 
 	public Window(int width, int height, String title) {
 		super(title);
+
+		// Window settings
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(width, height));
 		setLayout(new BorderLayout());
 
+		// Initialize window dialog to be used later
 		wd = new WindowDialog(this);
 
+		// Top Panel (task buttons + amount of tasks label)
 		topPanel = new JPanel(new BorderLayout());
 		topPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 10));
 		innerLeftTopPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -62,6 +67,8 @@ public class Window extends JFrame {
 			innerLeftTopPanel.add(button);
 		}
 
+		// Center Panel (Task List)
+
 		tasks = new TaskList(this);
 		amountOfItemsLabel = new JLabel(
 				"Tasks in the list: " + tasks.getAmountOfItems() + "/" + tasks.getMaxAmountOfItems());
@@ -70,29 +77,32 @@ public class Window extends JFrame {
 		topPanel.add(innerLeftTopPanel, BorderLayout.WEST);
 		topPanel.add(amountOfItemsLabel, BorderLayout.EAST);
 
-		JScrollPane scrollPane = new JScrollPane(tasks);
+		scrollPane = new JScrollPane(tasks);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(4);
 		scrollPane.setPreferredSize(new Dimension(0, 400));
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-		JPanel centerPanel = new JPanel();
-
+		centerPanel = new JPanel();
 		centerPanel.setLayout(new BorderLayout());
 		centerPanel.add(scrollPane, BorderLayout.NORTH);
 
 		add(topPanel, BorderLayout.NORTH);
 		add(centerPanel, BorderLayout.CENTER);
-		
-		JPanel statusPanel = new JPanel(new BorderLayout());
+
+		// Status panel (Latest action performed)
+
+		statusPanel = new JPanel(new BorderLayout());
 		statusPanel.setPreferredSize(new Dimension(0, 20));
 		statusPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 10));
 		statusLabel = new JLabel("Placeholder Status Text");
 		statusLabel.setForeground(new Color(200, 50, 50));
 		statusPanel.add(statusLabel, BorderLayout.EAST);
-		
+
 		add(statusPanel, BorderLayout.SOUTH);
-		
+
+		// Window settings
+
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -102,10 +112,10 @@ public class Window extends JFrame {
 		amountOfItemsLabel
 				.setText("Tasks in the list: " + tasks.getAmountOfItems() + "/" + tasks.getMaxAmountOfItems());
 	}
-	
+
 	public void updateStatusLabel(String status) {
 		statusLabel.setText(status);
-	} 
+	}
 
 	public TaskList getTaskList() {
 		return tasks;
