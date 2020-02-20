@@ -36,7 +36,6 @@ public class TaskListItem extends JPanel {
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		
-		String iconString = "["+task.getDate()+": "+task.getType()+"] " + task.getTitle();
 		JTextArea descriptionArea = new JTextArea(task.getDecription());
 		descriptionArea.setRows(1);
 		descriptionArea.setBorder(BorderFactory.createTitledBorder("Descrption (Optional)"));
@@ -76,17 +75,14 @@ public class TaskListItem extends JPanel {
 
 		add(rightPanel, gbc);
 		
-		LocalDate todaysDate = LocalDate.now(); 
-		titledBorder = BorderFactory.createTitledBorder(iconString);
-		
-		
+		LocalDate todaysDate = LocalDate.now();
 		int date = todaysDate.compareTo(task.getDate());
 		
 		if (date > 0) {
-			titledBorder = BorderFactory.createTitledBorder(iconString + " - Passed");
+			titledBorder = BorderFactory.createTitledBorder(task.getItemTitle() + " - Passed");
 			titledBorder.setTitleColor(new Color(200, 50, 50));	
 		} else if (date == 0) {
-			titledBorder = BorderFactory.createTitledBorder(iconString + " - Today");
+			titledBorder = BorderFactory.createTitledBorder(task.getItemTitle() + " - Today");
 			titledBorder.setTitleColor(new Color(200, 100, 50));
 		}
 			

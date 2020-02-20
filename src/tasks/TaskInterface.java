@@ -14,7 +14,9 @@ public interface TaskInterface {
 
 	public String getDecription();
 	
-	public LocalDate getDate();
+	public String getItemTitle();
+	
+	public LocalDate getDate(); 
 
 	public TaskType getType();
 	

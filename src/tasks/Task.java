@@ -27,6 +27,11 @@ public abstract class Task implements TaskInterface, Comparable<Task> {
 	}
 	
 	@Override
+	public String getItemTitle() {
+		return "["+date+": "+type+"] " + title;
+	}
+	
+	@Override
 	public void setTitle(String title) {
 		this.title = title;
 	}
