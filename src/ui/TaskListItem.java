@@ -21,16 +21,14 @@ public class TaskListItem extends JPanel {
 
 	private boolean isEditing = false;
 	private Task task;
-	private TaskList parent;
 
 	private JPanel rightPanel;
-	private JButton completedBtn, editBtn, deleteBtn;
+	private JButton deleteBtn;
 	private TitledBorder titledBorder;
 	private GridBagConstraints gbc;
 
 	public TaskListItem(Task task, TaskList parent) {
 		this.task = task;
-		this.parent = parent;
 
 		setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -49,7 +47,6 @@ public class TaskListItem extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.insets = new Insets(4, 4, 4, 4);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
 
 		add(descriptionArea, gbc);
 
@@ -57,6 +54,13 @@ public class TaskListItem extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 
+		/* Would be cool to implement later
+		 * Mark as completed to store them in another TaskList object
+		 * Edit would bring up another WindowDialog which allow you to edit
+		 * WindowDialog would possibly take a callback instead so it can be
+		 * passed to the "Edit task" / "Create task" button on the dialog
+		 */
+		/*
 		completedBtn = new JButton("Mark as completed");
 		completedBtn.setFocusPainted(false);
 		rightPanel.add(completedBtn);
@@ -69,8 +73,10 @@ public class TaskListItem extends JPanel {
 				editItem();
 			}
 		});
+		
 		rightPanel.add(editBtn);
-
+		*/
+		
 		deleteBtn = new JButton("Delete");
 		deleteBtn.setFocusPainted(false);
 		deleteBtn.addActionListener(new ActionListener() {
@@ -79,6 +85,7 @@ public class TaskListItem extends JPanel {
 				parent.removeItem(task);
 			}
 		});
+		
 		rightPanel.add(deleteBtn);
 
 		add(rightPanel, gbc);
@@ -98,18 +105,21 @@ public class TaskListItem extends JPanel {
 
 		setBorder(titledBorder);
 	}
-	
+
+	/*
 	public void editItem() {
 		if (!isEditing) {
 			parent.cancelEditOnItems();
 			isEditing = true;
+			
 			System.out.println("Enter edit mode");
 		} else {
 			isEditing = false;
 			System.out.println("Exit edit mode");
 		}
 	}
-	
+	*/
+
 	public boolean isBeingEdited() {
 		return isEditing;
 	}

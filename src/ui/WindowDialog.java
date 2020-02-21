@@ -50,8 +50,7 @@ public class WindowDialog extends JFrame {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
 		/*
-		 * LGoodDatePicker 10.4.1
-		 * https://github.com/LGoodDatePicker/LGoodDatePicker/
+		 * LGoodDatePicker 10.4.1 https://github.com/LGoodDatePicker/LGoodDatePicker/
 		 * MIT License
 		 */
 		DatePickerSettings dateSettings = new DatePickerSettings();
@@ -95,7 +94,8 @@ public class WindowDialog extends JFrame {
 					return;
 				}
 
-				if (windowInstance.getTaskList().getAmountOfItems() >= windowInstance.getTaskList().getMaxAmountOfItems()) 
+				if (windowInstance.getTaskList().getAmountOfItems() >= windowInstance.getTaskList()
+						.getMaxAmountOfItems())
 					return;
 
 				LocalDate date = LocalDate.parse(datePicker.getText());
@@ -145,17 +145,6 @@ public class WindowDialog extends JFrame {
 		return true;
 	}
 
-	public void callDialog(TaskType type, Point position) {
-		if (isShowing() && dialogTypeCaller == type) {
-			setVisible(false);
-			return;
-		}
-
-		dialogTypeCaller = type;
-		setupDialog(position);
-		clearDialog();
-	}
-
 	private void clearDialog() {
 		datePicker.setDateToToday();
 		titleField.setText("");
@@ -169,5 +158,16 @@ public class WindowDialog extends JFrame {
 		titledBorder.setTitle("Creating " + dialogTypeCaller.name().toLowerCase() + " task");
 		createBtn.setText("Create " + dialogTypeCaller.name().toLowerCase() + " task");
 		mainPanel.repaint();
+	}
+
+	public void callDialog(TaskType type, Point position) {
+		if (isShowing() && dialogTypeCaller == type) {
+			setVisible(false);
+			return;
+		}
+
+		dialogTypeCaller = type;
+		setupDialog(position);
+		clearDialog();
 	}
 }

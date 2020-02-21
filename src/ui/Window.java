@@ -32,14 +32,13 @@ public class Window extends JFrame {
 		super(title);
 
 		// Window (JFrame)
-
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(width, height));
 		setLayout(new BorderLayout());
 
 		// Initialize window dialog to be used later
 		wd = new WindowDialog(this);
-
+		
 		// Top Panel (task buttons + amount of tasks label)
 		topPanel = new JPanel(new BorderLayout());
 		topPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 10));
@@ -95,7 +94,7 @@ public class Window extends JFrame {
 		statusPanel = new JPanel(new BorderLayout());
 		statusPanel.setPreferredSize(new Dimension(0, 20));
 		statusPanel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 10));
-		statusLabel = new JLabel("Placeholder Status Text");
+		statusLabel = new JLabel();
 		statusLabel.setForeground(new Color(200, 50, 50));
 		statusPanel.add(statusLabel, BorderLayout.EAST);
 

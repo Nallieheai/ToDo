@@ -11,7 +11,7 @@ public class Main {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new Window(800, 600, "ToDo Tasks");
+				new Window(800, 500, "ToDo Tasks");
 			}
 		});
 	}
