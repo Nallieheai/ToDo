@@ -19,7 +19,7 @@ import tasks.Task;
 
 public class TaskListItem extends JPanel {
 
-	private boolean isEditing = false;
+	// private boolean isEditing = false;
 	private Task task;
 
 	private JPanel rightPanel;
@@ -54,29 +54,24 @@ public class TaskListItem extends JPanel {
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 
-		/* Would be cool to implement later
-		 * Mark as completed to store them in another TaskList object
-		 * Edit would bring up another WindowDialog which allow you to edit
-		 * WindowDialog would possibly take a callback instead so it can be
-		 * passed to the "Edit task" / "Create task" button on the dialog
+		/*
+		 * Would be cool to implement later Mark as completed to store them in another
+		 * TaskList object Edit would bring up another WindowDialog which allow you to
+		 * edit WindowDialog would possibly take a callback instead so it can be passed
+		 * to the "Edit task" / "Create task" button on the dialog
 		 */
 		/*
-		completedBtn = new JButton("Mark as completed");
-		completedBtn.setFocusPainted(false);
-		rightPanel.add(completedBtn);
+		 * completedBtn = new JButton("Mark as completed");
+		 * completedBtn.setFocusPainted(false); rightPanel.add(completedBtn);
+		 * 
+		 * editBtn = new JButton("Edit"); editBtn.setFocusPainted(false);
+		 * editBtn.addActionListener(new ActionListener() {
+		 * 
+		 * @Override public void actionPerformed(ActionEvent e) { editItem(); } });
+		 * 
+		 * rightPanel.add(editBtn);
+		 */
 
-		editBtn = new JButton("Edit");
-		editBtn.setFocusPainted(false);
-		editBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				editItem();
-			}
-		});
-		
-		rightPanel.add(editBtn);
-		*/
-		
 		deleteBtn = new JButton("Delete");
 		deleteBtn.setFocusPainted(false);
 		deleteBtn.addActionListener(new ActionListener() {
@@ -85,11 +80,13 @@ public class TaskListItem extends JPanel {
 				parent.removeItem(task);
 			}
 		});
-		
+
 		rightPanel.add(deleteBtn);
 
 		add(rightPanel, gbc);
 
+		// Compare todays date with the tasks date to see if the task has passed, is
+		// today or in the future
 		LocalDate todaysDate = LocalDate.now();
 		int date = todaysDate.compareTo(task.getDate());
 
@@ -107,22 +104,22 @@ public class TaskListItem extends JPanel {
 	}
 
 	/*
-	public void editItem() {
-		if (!isEditing) {
-			parent.cancelEditOnItems();
+ 	public void editItem() {
+ 		if (!isEditing) { 
+ 			parent.cancelEditOnItems();
 			isEditing = true;
 			
 			System.out.println("Enter edit mode");
-		} else {
+		} else { 
 			isEditing = false;
-			System.out.println("Exit edit mode");
-		}
+	 		System.out.println("Exit edit mode");
+	 	} 
 	}
-	*/
-
+	/*
 	public boolean isBeingEdited() {
 		return isEditing;
 	}
+	*/
 
 	public Task getTask() {
 		return task;
