@@ -59,8 +59,7 @@ public class TaskListItem extends JPanel {
 		 * TaskList object Edit would bring up another WindowDialog which allow you to
 		 * edit WindowDialog would possibly take a callback instead so it can be passed
 		 * to the "Edit task" / "Create task" button on the dialog
-		 */
-		/*
+		 *
 		 * completedBtn = new JButton("Mark as completed");
 		 * completedBtn.setFocusPainted(false); rightPanel.add(completedBtn);
 		 * 
